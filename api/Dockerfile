@@ -1,17 +1,11 @@
 FROM node:14
 
+RUN apt-get update && apt-get install -y netcat
+
 WORKDIR /app
 COPY ./package.json .
-
-# Installation des dépendances
 RUN npm install
-
-# Copie des fichiers sources
 COPY . .
-
-# Compilation TypeScript
+RUN chmod +x wait-for-db.sh
 RUN npx tsc
-
-RUN chmod +x app.sh
-
-CMD ./app.sh
+CMD npm start

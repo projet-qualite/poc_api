@@ -1,10 +1,6 @@
 import { Sequelize } from "sequelize";
 import "dotenv/config";
 
-console.log(process.env.DATABASE_NAME)
-console.log(process.env.DATABASE_USERNAME)
-console.log(process.env.DATABASE_PASSWORD)
-console.log(process.env.DATABASE_HOST)
 const sequelize = new Sequelize(
     process.env.DATABASE_NAME as string, 
     process.env.DATABASE_USERNAME as string, 

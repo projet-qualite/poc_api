@@ -12,10 +12,13 @@ services:
       - $MYSQLDB_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
     volumes:
       - db:/var/lib/mysql
+    networks:
+      - api-network
   app:
     depends_on:
       - mysqldb
     build: ./api
+    command: ["./wait-for-db.sh", "&&", "npm", "run", "migrate"]
     restart: unless-stopped
     env_file: ./.env
     ports:
@@ -28,6 +31,11 @@ services:
       - DB_PORT=$MYSQLDB_DOCKER_PORT
     stdin_open: true
     tty: true
+    networks:
+      - api-network
 
 volumes: 
   db:
+networks:
+  api-network:
+    driver: bridge
